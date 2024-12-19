@@ -24,7 +24,7 @@
     <ProjectGuid>{76ac89c0-e4dd-4781-9bda-4d57bd047910}</ProjectGuid>
     <RootNamespace>Matrix</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Solver</ProjectName>
+    <ProjectName>Matrix</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -131,15 +131,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ExerciseVirtual.h" />
-    <ClInclude Include="Genetator.h" />
+    <ClInclude Include="Generator.h" />
     <ClInclude Include="IStreamGenerator.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MyExercise.h" />
     <ClInclude Include="RandomGenerator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ExerciseVirtual.cpp" />
-    <ClCompile Include="Genetator.cpp" />
     <ClCompile Include="IStreamGenerator.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MyExercise.cpp" />
