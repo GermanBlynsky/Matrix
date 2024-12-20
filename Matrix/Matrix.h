@@ -22,6 +22,9 @@ namespace miit::algebra
 		int rows;
 		int columns;
 	public:
+
+		Matrix() = default; 
+
 		/**
 		* @brief Конструктор создания матрицы
 		* @param rows количество строк
@@ -80,19 +83,6 @@ namespace miit::algebra
 		std::string ToString() const;
 
 		/**
-		* @brief Функция заполнения матрицы случайными значениями
-		* @param other минимальное значение случайного числа
-		* @param other максимальное значение случайного числа
-		*/
-		void RandomIntFill(int min, int max);
-
-		/**
-		* @brief Функция заполнения матрицы конкетного значениями
-		* @param other in - поток ввода
-		*/
-		void IstreamIntFill(std::istream& in);
-
-		/**
 		* @brief Гетер для строк
 		* @return возвращает значения  поля строк (кол-во строк)
 		*/
@@ -103,11 +93,20 @@ namespace miit::algebra
 		* @return возвращает значения  поля столбцов (кол-во столбцов)
 		*/
 		int getColumns();
+
+		void Fill(Generator& generator);
 	};
 }
+
 template <typename T>
-miit::algebra::Matrix<T>::Matrix(int row, int column) :rows{ row }, columns{ column }
+miit::algebra::Matrix<T>::Matrix(int row, int column)
 {
+	if (row < 0 || column < 0)
+	{
+		throw std::out_of_range("Выход за границу");
+	}
+	rows = row;
+	columns = column;
 	this->matrix.assign(row, std::vector<T>(column));
 }
 
@@ -183,32 +182,6 @@ std::string miit::algebra::Matrix<T>::ToString() const
 }
 
 template<typename T>
-inline void miit::algebra::Matrix<T>::RandomIntFill(int min, int max)
-{
-	RandomGenerator generator(min, max);
-	for (int i = 0; i < rows; i++)
-	{
-		for (int j = 0; j < columns; j++)
-		{
-			matrix[i][j] = generator.generate();
-		}
-	}
-}
-
-template<typename T>
-inline void miit::algebra::Matrix<T>::IstreamIntFill(std::istream& in)
-{
-	IStreamGenerator generator(in);
-	for (int i = 0; i < rows; i++)
-	{
-		for (int j = 0; j < columns; j++)
-		{
-			matrix[i][j] = generator.generate();
-		}
-	}
-}
-
-template<typename T>
 inline int miit::algebra::Matrix<T>::getRows()
 {
 	return rows;
@@ -225,4 +198,16 @@ std::ostream& miit::algebra::operator<<(std::ostream& os, const Matrix<T>& matr)
 {
 	os << matr.ToString();
 	return os;
+}
+
+template<typename T>
+inline void miit::algebra::Matrix<T>::Fill(Generator& generator)
+{
+	for (size_t i = 0; i < rows; i++)
+	{
+		for (size_t j = 0; j < columns; j++)
+		{
+			matrix[i][j] = generator.generate();
+		}
+	}
 }

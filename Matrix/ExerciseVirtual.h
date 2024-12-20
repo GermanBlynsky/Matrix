@@ -1,37 +1,24 @@
 ﻿#pragma once
+#include"Matrix.h"
 
-#include "Matrix.h" 
+namespace miit::algebra
+{
+	class ExerciseVirtual
+	{
+	protected:
 
-namespace miit::algebra {
+		Matrix<int> matrix;
 
-    class ExerciseVirtual {
-    protected:
-        Matrix<int> matrix;
-    public:
+		virtual void task1() = 0;
 
-        /**
-        * @brief Конструктор по умолчанию
-        */
-        ExerciseVirtual() = default;
+		virtual void task2() = 0;
 
-        /**
-        * @brief Конструктор с matrix
-        */
-        ExerciseVirtual(const Matrix<int>& matrix) : matrix(matrix) {}
+	public:
 
-        /**
-        * @brief Деструктор по умолчанию
-        */
-        virtual ~ExerciseVirtual() = default; 
+		explicit ExerciseVirtual(int rows, int columns, Generator& generator);
 
-        /**
-        * @brief Чисто виртуальная функция
-        */
-        virtual Matrix<int> task1() = 0;
+		virtual ~ExerciseVirtual() = default;
 
-        /**
-        * @brief Чисто виртуальная функция
-        */
-        virtual Matrix<int> task2() = 0;
-    };
+		void Run();
+	};
 }
