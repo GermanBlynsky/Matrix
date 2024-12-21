@@ -19,8 +19,8 @@ namespace miit::algebra
 	{
 	private:
 		std::vector<std::vector<T>> matrix;
-		int rows;
-		int columns;
+		size_t rows;
+		size_t columns;
 	public:
 
 		Matrix() = default; 
@@ -30,51 +30,19 @@ namespace miit::algebra
 		* @param rows количество строк
 		* @param cols количество столбцов
 		*/
-		Matrix(int row, int column);
-
-		/**
-		* @brief Конструктор создания матрицы по параметрам rows, columns, matrix
-		* @param rows количество строк
-		* @param cols количество столбцов
-		* @param matrix матрица
-		*/
-		Matrix(int rows, int columns, const std::vector<std::vector<T>>& matrix);
-
-		/**
-		* @brief Конструктор копирования
-		* @param other матрица, которая будет скопирована
-		*/
-		Matrix(const Matrix& other);
-
-		/**
-		* @brief Конструктор перемещения
-		* @param other матрица, данные которой будут перемещены
-		*/
-		Matrix(Matrix&& other)noexcept;
-
-		/**
-		* @brief Оператор присваивания копированием
-		* @param other матрица, данные  которой будут скопированы
-		*/
-		Matrix& operator =(const Matrix& other);
-
-		/**
-		* @brief Оператор присваивания копированием
-		* @param other матрица, данные  которой будут перемещены
-		*/
-		Matrix& operator =(Matrix&& other) noexcept;
+		Matrix(size_t row, size_t column);
 
 		/**
 		* @brief Оператор разыменывания
 		* @param index индекс строки
 		*/
-		std::vector<T>& operator[](int index);
+		std::vector<T>& operator[](size_t index);
 
 		/**
 		* @brief Оператор разыменывания
 		* @param index индекс строки
 		*/
-		const std::vector<T>& operator[](int index) const;
+		const std::vector<T>& operator[](size_t index) const;
 
 		/**
 		* @brief Преобразовает матрицу в строку
@@ -86,68 +54,28 @@ namespace miit::algebra
 		* @brief Гетер для строк
 		* @return возвращает значения  поля строк (кол-во строк)
 		*/
-		int getRows();
+		size_t getRows();
 
 		/**
 		* @brief Гетер для столбцов
 		* @return возвращает значения  поля столбцов (кол-во столбцов)
 		*/
-		int getColumns();
+		size_t getColumns();
 
 		void Fill(Generator& generator);
 	};
 }
 
 template <typename T>
-miit::algebra::Matrix<T>::Matrix(int row, int column)
+miit::algebra::Matrix<T>::Matrix(size_t row, size_t column)
 {
-	if (row < 0 || column < 0)
-	{
-		throw std::out_of_range("Выход за границу");
-	}
 	rows = row;
 	columns = column;
 	this->matrix.assign(row, std::vector<T>(column));
 }
 
-
 template <typename T>
-miit::algebra::Matrix<T>::Matrix(int rows, int columns, const std::vector<std::vector<T>>& matrix) : rows{ rows }, columns{ columns }, matrix{ matrix }
-{
-
-}
-
-template <typename T>
-miit::algebra::Matrix<T>::Matrix(const Matrix& other) :matrix{ other.matrix }, rows{ other.rows }, columns{ other.columns } {}
-
-template <typename T>
-miit::algebra::Matrix<T>::Matrix(Matrix&& other)noexcept :matrix{ std::move(other.matrix) }, rows{ std::move(other.rows) }, columns{ std::move(other.columns) } {}
-
-template <typename T>
-miit::algebra::Matrix<T>& miit::algebra::Matrix<T>::operator=(const Matrix& other)
-{
-	if (this != &other)
-	{
-		this->matrix = other.matrix;
-		this->rows = other.rows;
-		this->columns = other.columns;
-	}
-	return *this;
-}
-
-template <typename T>
-miit::algebra::Matrix<T>& miit::algebra::Matrix<T>::operator=(Matrix&& other) noexcept
-{
-	if (this != &other)
-	{
-		this->matrix = std::move(other.matrix);
-		this->rows = std::move(other.rows);
-		this->columns = std::move(other.columns);
-	}
-	return *this;
-}
-template <typename T>
-std::vector<T>& miit::algebra::Matrix<T>::operator[](int index)
+std::vector<T>& miit::algebra::Matrix<T>::operator[](size_t index)
 {
 	if (index<0 || index>rows - 1)
 	{
@@ -157,12 +85,8 @@ std::vector<T>& miit::algebra::Matrix<T>::operator[](int index)
 }
 
 template <typename T>
-const std::vector<T>& miit::algebra::Matrix<T>::operator[](int index) const
+const std::vector<T>& miit::algebra::Matrix<T>::operator[](size_t index) const
 {
-	if (index<0 || index>rows - 1)
-	{
-		throw std::out_of_range("Введенно некорерктное значение индекса");
-	}
 	return matrix[index];
 }
 
@@ -170,9 +94,9 @@ template <typename T>
 std::string miit::algebra::Matrix<T>::ToString() const
 {
 	std::stringstream buffer{};
-	for (int i = 0; i < rows; i++)
+	for (size_t i = 0; i < rows; i++)
 	{
-		for (int j = 0; j < columns; j++)
+		for (size_t j = 0; j < columns; j++)
 		{
 			buffer << matrix[i][j] << " ";
 		}
@@ -182,13 +106,13 @@ std::string miit::algebra::Matrix<T>::ToString() const
 }
 
 template<typename T>
-inline int miit::algebra::Matrix<T>::getRows()
+inline size_t miit::algebra::Matrix<T>::getRows()
 {
 	return rows;
 }
 
 template<typename T>
-inline int miit::algebra::Matrix<T>::getColumns()
+inline size_t miit::algebra::Matrix<T>::getColumns()
 {
 	return columns;
 }

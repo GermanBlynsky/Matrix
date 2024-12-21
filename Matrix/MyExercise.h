@@ -7,7 +7,7 @@ namespace miit::algebra
 	{
 	public:
 
-		MyExercise(int rows, int columns, Generator& generator) : ExerciseVirtual(rows, columns, generator) {}
+		MyExercise(size_t rows, size_t columns, Generator& generator) : ExerciseVirtual(rows, columns, generator) {}
 
 		void task1() override;
 
