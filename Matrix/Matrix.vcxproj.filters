@@ -18,7 +18,7 @@
     <ClInclude Include="Matrix.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Genetator.h">
+    <ClInclude Include="Generator.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="IStreamGenerator.h">
@@ -36,9 +36,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Matrix.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Genetator.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="IStreamGenerator.cpp">
